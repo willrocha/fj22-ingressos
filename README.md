@@ -8,13 +8,13 @@ Esse sistema tem como objetivo controlar ingressos comprados por clientes direta
 
 *Cliente* 	- Dados pessoais
 
-*Ingressos* 	- Pagamento
-		- Quantidade
+*Ingressos* 	.- Pagamento
+		.- Quantidade
 
-*Filme*		- Titulo
-		- Duração
+*Filme*		.- Titulo
+		.- Duração
 
-*Sessão*	- Horário
-		- Sala
-		- Cadeira 
+*Sessão*	.- Horário
+		.- Sala
+		.- Cadeira 
 
