@@ -1,6 +1,7 @@
 package br.com.caelum.ingresso.model;
 
 import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,6 +21,7 @@ public class Sessao {
 	
 	@ManyToOne
 	private Filme filme;
+	
 
 	public LocalTime getHorario() {
 		return horario;
@@ -64,6 +66,11 @@ public class Sessao {
 	public void setFilme(Filme filme) {
 		this.filme = filme;
 	}
+
+	public LocalTime getHorarioTermino() {
+		return this.horario.plus(filme.getDuracao().toMinutes(),ChronoUnit.MINUTES);
+	}
+
 	
 
 }

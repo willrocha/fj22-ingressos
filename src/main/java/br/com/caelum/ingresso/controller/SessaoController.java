@@ -1,5 +1,7 @@
 package br.com.caelum.ingresso.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,7 @@ import br.com.caelum.ingresso.dao.SalaDao;
 import br.com.caelum.ingresso.dao.SessaoDao;
 import br.com.caelum.ingresso.model.Sessao;
 import br.com.caelum.ingresso.model.form.SessaoForm;
+import br.com.caelum.ingresso.model.validation.GerenciadorDeSessao;
 
 @Controller
 public class SessaoController {
@@ -47,12 +50,17 @@ public class SessaoController {
 		
 		if(result.hasErrors()) return form(form.getSalaId(), form);
 		
-		ModelAndView modelAndView = new ModelAndView("redirect:/sala/"+form.getSalaId()+"/sessoes");
-		
 		Sessao sessao = form.toSessao(salaDao, filmeDao);
 		
-		sessaoDao.save(sessao);
+		List<Sessao> sessoesDaSala = sessaoDao.buscaSessaoDaSala(sessao.getSala());
 		
-		return modelAndView;
+		GerenciadorDeSessao gerenciador = new GerenciadorDeSessao(sessoesDaSala);
+		
+		if(gerenciador.cabe(sessao)){
+			sessaoDao.save(sessao);
+			return new ModelAndView("redirect:/sala/"+form.getSalaId()+"/sessoes");
+		}
+		
+		return form(form.getSalaId(), form);
 	}
 }
